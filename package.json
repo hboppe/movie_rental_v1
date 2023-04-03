@@ -1,0 +1,16 @@
+{
+  "name": "movies-sp2-m4-hboppe",
+  "version": "1.0.0",
+  "description": "## Introdução",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --ignore-watch=node_modules --rs --cls src/app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
