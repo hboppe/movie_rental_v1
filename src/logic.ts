@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { client } from "./database";
-import { IMoviesCreate, IMoviesRequest } from "./interfaces";
+import { IMovies, IMoviesCreate, IMoviesRequest } from "./interfaces";
 import format from 'pg-format';
-import { QueryResult } from 'pg';
+import { Query, QueryConfig, QueryResult } from 'pg';
 
 const createMovie = async (request: Request, response: Response): Promise<Response> => {
 
@@ -23,7 +23,6 @@ const createMovie = async (request: Request, response: Response): Promise<Respon
     return response.status(201).json(queryResult.rows[0]);
     
   } catch (error) {
-    console.log(error)
     return response.status(409).json({
       error: "Movie name already exists!"
     })
@@ -33,16 +32,27 @@ const createMovie = async (request: Request, response: Response): Promise<Respon
 
 const retrieveAllMovies = async (request: Request, response: Response): Promise<Response> => {
 
-  const category = request.query.category || true; 
+  const category: string | null = request.query.category ? request.query.category.toString() : null; 
 
-  const query = `
+  const query: string = `
     SELECT *
     FROM movies
-    WHERE $1
+    WHERE category = $1;
   `
-
   const queryResult: QueryResult = await client.query(query, [category]);
 
+  if(queryResult.rows.length === 0){
+
+    const newQuery = `
+      SELECT *
+      FROM movies
+    `;
+
+    const newQueryResult: QueryResult = await client.query(newQuery);
+
+    return response.status(200).json(newQueryResult.rows)
+  }
+  
   return response.status(200).json(queryResult.rows);
 }
 
@@ -58,8 +68,66 @@ const deleteMovie = async (request: Request, response: Response): Promise<Respon
   return response.status(204).json();
 }
 
+const updateMovie = async (request: Request, response: Response): Promise<Response> => {
+  const id: number = Number(response.locals.movies.id);
+  const updatedData: Partial<IMovies> = request.body;
+
+  if(updatedData.id){
+    delete updatedData.id;
+  } else if(updatedData.name){
+    const query:string = `
+      SELECT *
+      FROM movies
+      WHERE name = $1;
+    `
+    const queryResult: QueryResult = await client.query(query, [updatedData.name]);
+    
+    if(queryResult.rows.length > 0){
+      return response.status(409).json({
+        error: "Movie name already exists!"
+      })
+    }
+  }
+
+  const query: string = format(`
+      UPDATE movies
+      SET (%I) = ROW (%L)
+      WHERE id = $1
+      RETURNING *;
+    `,
+    Object.keys(updatedData),
+    Object.values(updatedData)
+  );
+
+  try {
+    const queryResult: IMoviesCreate = await client.query(query, [id]);
+    return response.status(200).json(queryResult.rows[0]);
+    
+  } catch (error) {
+    return response.status(409).json({
+      error: "Movie name already exists!"
+    })
+  }
+
+}
+
+const retrieveMovieById = async (request: Request, response: Response): Promise<Response> => {
+  const id: number = Number(response.locals.movies.id);
+
+  const query: string = `
+    SELECT *
+    FROM movies
+    WHERE id = $1;
+  `
+  const queryResult: QueryResult = await client.query(query, [id]);
+
+  return response.status(200).json(queryResult.rows[0]);
+}
+
 export {
   createMovie,
   retrieveAllMovies,
-  deleteMovie
+  deleteMovie,
+  updateMovie,
+  retrieveMovieById
 }
