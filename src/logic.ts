@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { client } from "./database";
 import { IMovies, IMoviesCreate, IMoviesRequest } from "./interfaces";
 import format from 'pg-format';
-import { Query, QueryConfig, QueryResult } from 'pg';
+import { QueryResult } from 'pg';
 
 const createMovie = async (request: Request, response: Response): Promise<Response> => {
 
@@ -59,11 +59,11 @@ const retrieveAllMovies = async (request: Request, response: Response): Promise<
 const deleteMovie = async (request: Request, response: Response): Promise<Response> => {
   const id: number = Number(response.locals.movies.id);
 
-  const query = `
+  const query: string = `
     DELETE FROM movies
     WHERE id = $1
   `
-  const queryResults = await client.query(query, [id]);
+  await client.query(query, [id]);
 
   return response.status(204).json();
 }
