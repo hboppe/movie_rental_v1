@@ -2,7 +2,7 @@
 
 This project provides a REST API for managing a movie rental service. The API allows you to create, retrieve, update, and delete movies from the collection. The following sections describe the available endpoints.
 
-## GET ```/movies
+## GET ```/movies ```
 
 Hoje você recebeu uma demanda inesperada. O gestor de uma _locadora de filmes_ entrou em contato solicitando seus serviços. O objetivo é elaborar uma API que será utilizada em uma plataforma de streaming. Essa API terá o intuito de gerenciar a coleção de filmes disponíveis.
 
