@@ -13,6 +13,60 @@ This route lists all the movies in the collection and also allows you to filter 
 
 ```GET /movies?category=Animation```
 
+## POST ```/movies```
+
+This route creates a new movie.
+
+### Request body
+
+```json
+{
+  "name": "Inside Out",
+  "category": "Animation",
+  "duration": 120,
+  "price": 35
+}
+```
+
+### Response
+
+Status code: ```201 CREATED```
+
+```json
+{
+  "id": 1,
+  "name": "Inside Out",
+  "category": "Animation",
+  "duration": 120,
+  "price": 35
+}
+```
+
+## GET ```/movies/:id```
+
+This route retrieves a movie by its id.
+
+### Example request
+
+```GET /movies/1```
+
+### Response
+
+Status code: ```200 OK``` 
+
+```json
+{
+  "id": 1,
+  "name": "Inside Out",
+  "category": "Animation",
+  "duration": 120,
+  "price": 35
+}
+```
+## PATCH ```/movies/:id```
+
+
+
 
 
 Abaixo estão todas as regras de negócio definidas pelo cliente, tanto para a entrega quanto para a aplicação. Esse é um cliente muito exigente, portanto siga à risca todas as regras impostas.
