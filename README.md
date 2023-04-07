@@ -161,7 +161,21 @@ For the routes ```POST``` and ```PATCH```, if the name already exists, the follo
 }
 ```
 
-## Database
+## Database Table: movies
+
+The ```movies``` table in the database was created using the following SQL statement:
+
+```sql
+CREATE TABLE movies (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(50) UNIQUE NOT NULL,
+  category VARCHAR(20) NOT NULL,
+  duration INTEGER NOT NULL,
+  price NUMERIC(10,2) NOT NULL
+);
+```
+
+
 
 
      
