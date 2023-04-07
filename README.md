@@ -174,6 +174,10 @@ CREATE TABLE movies (
   price NUMERIC(10,2) NOT NULL
 );
 ```
+The table structure is based on the provided diagram:
+
+![image](https://user-images.githubusercontent.com/105255009/230614385-a4a09032-2eaa-4a74-9e34-9891e9ae9673.png)
+
 
 
 
