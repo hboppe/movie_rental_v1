@@ -9,7 +9,7 @@ This route lists all the movies in the collection and also allows you to filter 
 - Query parameter: category
 - If the provided category does not exist, all movies will be returned.
 
-###Example request
+### Example request
 
 ```GET /movies?category=Animation```
 
