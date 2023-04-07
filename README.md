@@ -185,5 +185,5 @@ The table structure is based on the provided diagram:
 - category: The movie's category (VARCHAR 20), cannot be null.
 - duration: The movie's duration in minutes (INTEGER), cannot be null.
 - price: The movie's price (NUMERIC with a precision of 10 and a scale of 2), cannot be null.
-- 
+
 This table structure ensures that each movie has a unique name and contains all the necessary information for managing the movie collection.
