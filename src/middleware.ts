@@ -26,6 +26,21 @@ const ensureMovieExists = async (request: Request, response: Response, next: Nex
   return next();
 }
 
+const ensureThereIsLimitAndOffsset = async (request: Request, response: Response, next: NextFunction): Promise<Response | void> => {
+  let perpage: number = request.query.perpage ? Number(request.query.perpage)  : 0 ;
+  let page: number = request.query.page ? Number(request.query.page) : 0;
+
+  page = (page - 1) * perpage;
+
+  response.locals.movies = {
+    perpage: perpage,
+    page: page
+  };
+  
+  return next();
+}
+
 export {
-  ensureMovieExists
+  ensureMovieExists,
+  ensureThereIsLimitAndOffsset
 }

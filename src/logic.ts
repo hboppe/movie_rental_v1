@@ -34,21 +34,30 @@ const retrieveAllMovies = async (request: Request, response: Response): Promise<
 
   const category: string | null = request.query.category ? request.query.category.toString() : null; 
 
+  const perpage: number | null = parseInt(response.locals.movies.perpage) === 0 ? null : parseInt(response.locals.movies.perpage);
+  const page: number | null = parseInt(response.locals.movies.page) === 0 ? null : parseInt(response.locals.movies.page);
+
   const query: string = `
     SELECT *
     FROM movies
-    WHERE category = $1;
+    WHERE category = $1
+    ORDER BY id
+    LIMIT $2
+    OFFSET $3;
   `
-  const queryResult: QueryResult = await client.query(query, [category]);
+  const queryResult: QueryResult = await client.query(query, [category, perpage, page]);
 
   if(queryResult.rows.length === 0){
 
     const newQuery = `
       SELECT *
       FROM movies
+      ORDER BY id
+      LIMIT $1
+      OFFSET $2;
     `;
 
-    const newQueryResult: QueryResult = await client.query(newQuery);
+    const newQueryResult: QueryResult = await client.query(newQuery, [perpage, page]);
 
     return response.status(200).json(newQueryResult.rows)
   }
