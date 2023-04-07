@@ -12,14 +12,14 @@ This project provides a REST API for managing a movie rental service. The API al
 
 ## GET ```/movies```
 
-This route lists all the movies in the collection and also allows you to filter movies by a specific category.
+This endpoint allows you to list all the movies in the database. Additionally, you can filter the movies by a specific category using the category query parameter. You can also paginate the results using the page and per_page query parameters to set the limit and offset, respectively. The page parameter specifies which page of results to display, and the per_page parameter defines how many movies to display per page.
 
 - Query parameter: category
 - If the provided category does not exist, all movies will be returned.
 
 ### Example request
 
-```GET /movies?category=Animation```
+```GET /movies?category=Animation&page=1&per_page=3```
 
 ### Response
 
@@ -35,6 +35,13 @@ This route lists all the movies in the collection and also allows you to filter 
   {
      "id": 2,
      "name": "Luck",
+     "category": "Animation",
+     "duration": 120,
+     "price": 40.34,
+   },
+   {
+     "id": 3,
+     "name": "Anastasia",
      "category": "Animation",
      "duration": 120,
      "price": 40.34,
