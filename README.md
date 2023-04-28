@@ -6,7 +6,7 @@ This project provides a REST API for managing a movie rental service. The API al
 | ------ | ----------- | ---------------------- |
 | POST   | /movies     | Create movies          |
 | GET    | /movies     | Retrieve all movies    |
-| GET    | /movies/:id | Retrive movie by id    |
+| GET    | /movies/:id | Retrieve movie by id    |
 | PATCH  | /movies/:id | Update movie by id     |
 | DELETE | /movies/:id | Delete movie by id     |
 
